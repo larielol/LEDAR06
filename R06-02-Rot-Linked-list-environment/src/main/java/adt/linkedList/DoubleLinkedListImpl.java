@@ -18,6 +18,7 @@ public class DoubleLinkedListImpl<T> extends SingleLinkedListImpl<T> implements
 			node.setNext(this.getHead());
 			node.setPrevious(new DoubleLinkedListNode<>());
 			((DoubleLinkedListNode<T>) this.getHead()).setPrevious(node);
+			node.getPrevious().setNext(node);
 
 			if (this.getHead().isNIL()) {
 				this.setLast(node);
@@ -25,7 +26,7 @@ public class DoubleLinkedListImpl<T> extends SingleLinkedListImpl<T> implements
 			this.setHead(node);
 		}
 	}
-
+	
 	@Override
 	public void removeFirst() {
 		if (!this.isEmpty()) {
@@ -43,8 +44,9 @@ public class DoubleLinkedListImpl<T> extends SingleLinkedListImpl<T> implements
 			this.setLast(this.getLast().getPrevious());
 			if (this.getLast().isNIL()) {
 				this.setHead(this.getLast());
+			} else {
+				this.getLast().setNext(new DoubleLinkedListNode<>());
 			}
-			this.getLast().setNext(new DoubleLinkedListNode<>());
 		}
 	}
 
@@ -55,6 +57,7 @@ public class DoubleLinkedListImpl<T> extends SingleLinkedListImpl<T> implements
 			newLast.setData(element);
 			newLast.setPrevious(this.getLast());
 			newLast.setNext(new DoubleLinkedListNode<>());
+			((DoubleLinkedListNode<>)newLast.getNext()).setPrevious(newLast);
 
 			this.getLast().setNext(newLast);
 
